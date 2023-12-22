@@ -1,0 +1,9 @@
+{
+  "payload": "{\"hello\":\"world\"}",
+  "params": [
+    "hello",
+    "world",
+    "2004-06-14T23:34:30"
+  ],
+  "method": "store"
+}
