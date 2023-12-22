@@ -1,13 +1,13 @@
 [package]
 name = "wimcm"
-version = "0.1.0"
+version = "0.0.0"
 edition = "2021"
 authors = ["Adriiii"]
-description = "Wizards Basic Server Library"
+description = "Wizards in Memory Cache Models"
 readme = "README.md"
-repository = "https://github.com/AdrisGithub/wbsl"
+repository = "https://github.com/AdrisGithub/wimcm"
 license = "GPL-2.0-or-later"
-documentation = "https://docs.rs/wbsl"
+documentation = "https://docs.rs/wimcm"
 exclude = ["src/resources/", ".github/", "sonar-project.properties"]
 
 [dependencies]
