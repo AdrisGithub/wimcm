@@ -1,4 +1,20 @@
-{
-  "result": "1",
-  "error": null
-}
+[
+  {
+    "result": "1",
+    "error": null
+  },
+  {
+    "result": [
+      "{}",
+      "{}"
+    ],
+    "error": null
+  },
+  {
+    "result": null,
+    "error": {
+      "code": 123,
+      "detail": "This is a Custom Error"
+    }
+  }
+]
