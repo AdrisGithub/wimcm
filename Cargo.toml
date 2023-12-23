@@ -15,3 +15,4 @@ path = "src/main/lib.rs"
 
 [dependencies]
 wjp = "1.0.2"
+wbdl = "1.0.0"
