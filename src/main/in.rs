@@ -1,4 +1,4 @@
-use wjp::{map, ParseError, Serialize, SerializeHelper, Values};
+use wjp::{Deserialize, map, ParseError, Serialize, SerializeHelper, Values};
 
 use crate::method::WIMCMethods;
 
@@ -30,21 +30,24 @@ impl Default for WIMCInput {
 
 impl WIMCInput {
     pub fn new<T: Serialize>(obj: T, params: Vec<String>, method: WIMCMethods) -> Self {
+        Self::from_val(obj.serialize(), params, method)
+    }
+    pub const fn from_val(obj: Values, params: Vec<String>, method: WIMCMethods) -> Self {
         Self {
-            payload: obj.serialize(),
             params,
             method,
+            payload: obj,
         }
     }
 
-    pub fn get_method(&self) -> &WIMCMethods {
+    pub const fn get_method(&self) -> &WIMCMethods {
         &self.method
     }
     pub fn set_method(&mut self, method: WIMCMethods) -> &mut Self {
         self.method = method;
         self
     }
-    pub fn get_params(&self) -> &Vec<String> {
+    pub const fn get_params(&self) -> &Vec<String> {
         &self.params
     }
     pub fn set_params(&mut self, params: Vec<String>) -> &mut Self {
@@ -61,6 +64,20 @@ impl WIMCInput {
     }
     pub fn mutate_params(mut self, func: fn(Vec<String>) -> Vec<String>) -> Self {
         self.params = func(self.params);
+        self
+    }
+    pub fn get_payload(&self) -> &Values {
+        &self.payload
+    }
+    pub fn get_parsed_payload<T: Deserialize>(&self) -> Result<T, ParseError> {
+        T::deserialize(self.payload.to_string())
+    }
+    pub fn set_payload(&mut self, values: Values) -> &mut Self {
+        self.payload = values;
+        self
+    }
+    pub fn set_parsed_payload<T: Serialize>(&mut self, obj: T) -> &mut Self {
+        self.payload = obj.serialize();
         self
     }
 }
