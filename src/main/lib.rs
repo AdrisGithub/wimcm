@@ -1,3 +1,4 @@
 pub mod error;
 pub mod models;
-mod method;
+pub mod method;
+pub mod r#in;
