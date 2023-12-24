@@ -11,6 +11,12 @@ impl Serialize for WIMCOutput {
     }
 }
 
+impl Default for WIMCOutput {
+    fn default() -> Self {
+        Self(Ok(Values::String(String::from("Pong"))))
+    }
+}
+
 impl TryFrom<Values> for WIMCOutput {
     type Error = ParseError;
     fn try_from(value: Values) -> Result<Self, Self::Error> {
@@ -32,13 +38,13 @@ impl From<WIMCError> for WIMCOutput {
 }
 
 impl WIMCOutput {
-    pub fn from_values(val: Values) -> Self {
+    pub const fn from_values(val: Values) -> Self {
         Self(Ok(val))
     }
-    pub fn is_error(&self) -> bool {
+    pub const fn is_error(&self) -> bool {
         self.0.is_err()
     }
-    pub fn is_okay(&self) -> bool {
+    pub const fn is_okay(&self) -> bool {
         !self.is_error()
     }
     pub fn ok(self) -> Option<Values> {
