@@ -20,7 +20,7 @@ impl Serialize for WIMCError {
 impl TryFrom<Values> for WIMCError {
     type Error = ParseError;
     fn try_from(value: Values) -> Result<Self, Self::Error> {
-        let string = value.get_string().ok_or(ParseError::new())?;
+        let _ = value.get_string().ok_or(ParseError::new())?;
         Ok(WIMCError)
     }
 }
