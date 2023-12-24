@@ -5,7 +5,7 @@ use wjp::{ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
 
-const NAMES: [&str; 3] = ["Ping", "Echo", "Cleanup"];
+const NAMES: [&str; 6] = ["Ping", "Echo", "Cleanup", "Store", "Get", "Query"];
 
 #[derive(Copy, Clone, PartialOrd, PartialEq, Ord, Eq, Hash, Default, Debug)]
 pub enum WIMCMethods {
@@ -13,6 +13,9 @@ pub enum WIMCMethods {
     Ping,
     Echo,
     Cleanup,
+    Store,
+    Get,
+    Query,
 }
 
 impl Serialize for WIMCMethods {
@@ -60,6 +63,9 @@ impl TryFrom<usize> for WIMCMethods {
             0 => Ok(WIMCMethods::Ping),
             1 => Ok(WIMCMethods::Echo),
             2 => Ok(WIMCMethods::Cleanup),
+            3 => Ok(WIMCMethods::Store),
+            4 => Ok(WIMCMethods::Get),
+            5 => Ok(WIMCMethods::Query),
             _ => Err(WIMCError),
         }
     }
