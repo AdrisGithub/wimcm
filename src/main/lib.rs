@@ -1,4 +1,10 @@
-pub mod error;
-pub mod r#in;
-pub mod method;
-pub mod out;
+pub use error::WIMCError;
+pub use method::WIMCMethods;
+pub use out::WIMCOutput;
+pub use r#in::WIMCInput;
+
+mod error;
+mod r#in;
+mod method;
+mod out;
+pub mod presets;
