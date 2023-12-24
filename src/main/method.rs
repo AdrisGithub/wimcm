@@ -31,7 +31,7 @@ impl TryFrom<Values> for WIMCMethods {
     type Error = ParseError;
     fn try_from(value: Values) -> Result<Self, Self::Error> {
         Self::try_from(value.get_string().ok_or(ParseError::new())?)
-            .map_err(|err| ParseError::new())
+            .map_err(|_err| ParseError::new())
     }
 }
 
