@@ -1,13 +1,6 @@
 use wjp::{Deserialize, map, ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
-use crate::method::WIMCMethods;
-
-pub struct WIMCInput {
-    payload: String,
-    params: Vec<String>,
-    method: WIMCMethods,
-}
 
 #[derive(Clone)]
 pub struct WIMCOutput(Result<Values, WIMCError>);
