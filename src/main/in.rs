@@ -17,6 +17,7 @@ impl Serialize for WIMCInput {
         ))
     }
 }
+
 impl TryFrom<Values> for WIMCInput {
     type Error = ParseError;
     fn try_from(value: Values) -> Result<Self, Self::Error> {
@@ -24,5 +25,10 @@ impl TryFrom<Values> for WIMCInput {
         let payload = struc.map_val("payload", String::try_from)?;
         let params = struc.map_val("params", Vec::try_from)?;
         let method = struc.map_val("method", WIMCMethods::try_from)?;
+        Ok(Self {
+            method,
+            params,
+            payload,
+        })
     }
 }
