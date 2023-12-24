@@ -1,4 +1,4 @@
-use wjp::{Deserialize, map, ParseError, Serialize, Values};
+use wjp::{map, Deserialize, ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
 
@@ -47,7 +47,7 @@ impl WIMCOutput {
     pub fn deserialize<T: Deserialize>(self) -> Result<T, WIMCError> {
         match self.0 {
             Ok(v) => Ok(T::deserialize(v.to_string()).map_err(|_err| WIMCError)?),
-            Err(e) => Err(e)
+            Err(e) => Err(e),
         }
     }
     pub fn err(self) -> Option<WIMCError> {
@@ -61,8 +61,8 @@ impl WIMCOutput {
     }
     fn serialize(self) -> Values {
         match self.0 {
-            Ok(val) => Values::Struct(map!(("result",val),("error",Values::Null))),
-            Err(err) => Values::Struct(map!(("result",Values::Null),("error",err.serialize())))
+            Ok(val) => Values::Struct(map!(("result", val), ("error", Values::Null))),
+            Err(err) => Values::Struct(map!(("result", Values::Null), ("error", err.serialize()))),
         }
     }
 }
