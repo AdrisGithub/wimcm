@@ -1,4 +1,4 @@
-use wjp::{map, Deserialize, ParseError, Serialize, Values};
+use wjp::{Deserialize, map, ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
 
