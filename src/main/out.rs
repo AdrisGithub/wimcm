@@ -50,10 +50,10 @@ impl WIMCOutput {
     pub fn ok(self) -> Option<Values> {
         self.0.ok()
     }
-    pub fn deserialize<T: Deserialize>(self) -> Result<T, WIMCError> {
+    pub fn deserialize<T: Deserialize>(self) -> Result<T, ParseError> {
         match self.0 {
-            Ok(v) => Ok(T::deserialize(v.to_string()).map_err(|_err| WIMCError)?),
-            Err(e) => Err(e),
+            Ok(v) => T::deserialize(v.to_string()),
+            Err(_) => Err(ParseError::new()),
         }
     }
     pub fn err(self) -> Option<WIMCError> {
