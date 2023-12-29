@@ -20,7 +20,7 @@ pub enum WIMCMethods {
 
 impl Serialize for WIMCMethods {
     fn serialize(&self) -> Values {
-        Values::String(self.to_string())
+        self.to_string().serialize()
     }
 }
 

@@ -1,6 +1,6 @@
 [package]
 name = "wimcm"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 authors = ["Adriiii"]
 description = "Wizards in Memory Cache Models"
@@ -14,5 +14,5 @@ exclude = ["src/resources/", ".github/", "sonar-project.properties"]
 path = "src/main/lib.rs"
 
 [dependencies]
-wjp = "1.0.2"
+wjp = "1.1.1"
 wbdl = "1.0.0"

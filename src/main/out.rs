@@ -67,8 +67,8 @@ impl WIMCOutput {
     }
     fn serialize(self) -> Values {
         match self.0 {
-            Ok(val) => Values::Struct(map!(("result", val), ("error", Values::Null))),
-            Err(err) => Values::Struct(map!(("result", Values::Null), ("error", err.serialize()))),
+            Ok(val) => Values::Struct(map!(("result", &val), ("error", &Values::Null))),
+            Err(err) => Values::Struct(map!(("result", &Values::Null), ("error", &err))),
         }
     }
 }

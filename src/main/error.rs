@@ -13,7 +13,7 @@ impl From<ParseIntError> for WIMCError {
 
 impl Serialize for WIMCError {
     fn serialize(&self) -> Values {
-        Values::String(String::from("Hello"))
+        "Hello".serialize()
     }
 }
 
