@@ -10,7 +10,7 @@ const SPACE: char = ' ';
 const CLEANUP: WIMCInput = WIMCInput::from_val(Values::Null, Vec::new(), WIMCMethods::Cleanup);
 const PING: WIMCInput = WIMCInput::from_val(Values::Null, Vec::new(), WIMCMethods::Ping);
 
-pub fn echo(msg: String) -> WIMCInput {
+pub fn echo(msg: &str) -> WIMCInput {
     let vec = msg.split(SPACE).map(String::from).collect();
     WIMCInput::from_val(Values::Null, vec, WIMCMethods::Echo)
 }
