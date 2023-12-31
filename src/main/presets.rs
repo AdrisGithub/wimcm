@@ -60,8 +60,8 @@ pub fn found(values: Values) -> WIMCOutput {
     WIMCOutput::from_values(values)
 }
 
-pub fn get(id: usize) -> WIMCInput {
-    WIMCInput::from_val(Values::Null, vec![id.to_string()], WIMCMethods::Get)
+pub fn get(id: u128) -> WIMCInput {
+    WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Get)
 }
 
 pub fn query(params: Vec<String>) -> WIMCInput {
