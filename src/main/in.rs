@@ -11,9 +11,9 @@ pub struct WIMCInput {
 impl Serialize for WIMCInput {
     fn serialize(&self) -> Values {
         Values::Struct(map!(
-            ("payload", self.payload.clone()),
-            ("params", self.params.serialize()),
-            ("method", self.method.serialize())
+            ("payload", &self.payload),
+            ("params", &self.params),
+            ("method", &self.method)
         ))
     }
 }
