@@ -1,7 +1,7 @@
 use wjp::{Deserialize, map, ParseError, Serialize, SerializeHelper, Values};
 
 use crate::method::WIMCMethods;
-
+#[derive(Clone,Debug)]
 pub struct WIMCInput {
     payload: Values,
     params: Vec<String>,

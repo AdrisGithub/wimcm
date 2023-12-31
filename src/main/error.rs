@@ -2,7 +2,7 @@ use std::num::ParseIntError;
 
 use wjp::{ParseError, Serialize, Values};
 
-#[derive(Debug, Default, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone,PartialOrd, PartialEq,Ord, Eq,Hash)]
 pub struct WIMCError;
 
 impl From<ParseIntError> for WIMCError {

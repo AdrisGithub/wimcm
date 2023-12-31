@@ -2,7 +2,7 @@ use wjp::{Deserialize, map, ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 pub struct WIMCOutput(Result<Values, WIMCError>);
 
 impl Serialize for WIMCOutput {
