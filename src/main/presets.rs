@@ -67,3 +67,6 @@ pub fn get(id: u128) -> WIMCInput {
 pub fn query(params: Vec<String>) -> WIMCInput {
     WIMCInput::from_val(Values::Null, params, WIMCMethods::Query)
 }
+pub fn remove(id: u128) -> WIMCInput {
+    WIMCInput::from_val(Values::Number(id as f64),vec![],WIMCMethods::Remove)
+}
