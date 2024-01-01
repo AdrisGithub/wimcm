@@ -20,20 +20,19 @@ pub const fn ping() -> WIMCInput {
 }
 
 pub fn pong() -> WIMCOutput {
-    respond(vec![String::from("Pong")])
+   WIMCOutput::from_values(Values::String(String::from("Pong")))
 }
 
 pub fn respond(msg: Vec<String>) -> WIMCOutput {
     let mut string = String::new();
-    let mut first = true;
+    let len =  msg.len();
     for word in msg {
-        if first {
-            first = false;
-        } else {
-            string.push(SPACE);
-        }
         string.push_str(word.as_str());
+        string.push(SPACE);
     };
+    if len == 1 {
+        string.pop();
+    }
     WIMCOutput::from_values(Values::String(string))
 }
 
@@ -48,25 +47,25 @@ pub fn store<T: Serialize>(obj: T, mut params: Vec<String>, time: Option<Date>) 
     WIMCInput::new(obj, params, WIMCMethods::Store)
 }
 
-pub fn stored(id: usize) -> WIMCOutput {
+pub const fn stored(id: u128) -> WIMCOutput {
     WIMCOutput::from_values(Values::Number(id as f64))
 }
 
-pub fn error(error: WIMCError) -> WIMCOutput {
-    WIMCOutput::from(error)
+pub const fn error(error: WIMCError) -> WIMCOutput {
+    WIMCOutput::from_err(error)
 }
 
-pub fn found(values: Values) -> WIMCOutput {
+pub const fn found(values: Values) -> WIMCOutput {
     WIMCOutput::from_values(values)
 }
 
-pub fn get(id: u128) -> WIMCInput {
+pub const fn get(id: u128) -> WIMCInput {
     WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Get)
 }
 
-pub fn query(params: Vec<String>) -> WIMCInput {
+pub const fn query(params: Vec<String>) -> WIMCInput {
     WIMCInput::from_val(Values::Null, params, WIMCMethods::Query)
 }
-pub fn remove(id: u128) -> WIMCInput {
+pub const fn remove(id: u128) -> WIMCInput {
     WIMCInput::from_val(Values::Number(id as f64),vec![],WIMCMethods::Remove)
 }
