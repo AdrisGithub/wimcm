@@ -1,7 +1,7 @@
-use wjp::{Deserialize, map, ParseError, Serialize, SerializeHelper, Values};
+use wjp::{map, Deserialize, ParseError, Serialize, SerializeHelper, Values};
 
 use crate::method::WIMCMethods;
-#[derive(Clone,Debug, PartialEq,Default)]
+#[derive(Clone, Debug, PartialEq, Default)]
 pub struct WIMCInput {
     payload: Values,
     params: Vec<String>,
@@ -40,8 +40,8 @@ impl WIMCInput {
     pub const fn get_params(&self) -> &Vec<String> {
         &self.params
     }
-    pub fn destruct(self) -> (Values, Vec<String>, WIMCMethods){
-        (self.payload,self.params,self.method)
+    pub fn destruct(self) -> (Values, Vec<String>, WIMCMethods) {
+        (self.payload, self.params, self.method)
     }
     pub fn set_params(mut self, params: Vec<String>) -> Self {
         self.params = params;

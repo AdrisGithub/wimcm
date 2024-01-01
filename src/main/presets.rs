@@ -20,16 +20,16 @@ pub const fn ping() -> WIMCInput {
 }
 
 pub fn pong() -> WIMCOutput {
-   WIMCOutput::from_values(Values::String(String::from("Pong")))
+    WIMCOutput::from_values(Values::String(String::from("Pong")))
 }
 
 pub fn respond(msg: Vec<String>) -> WIMCOutput {
     let mut string = String::new();
-    let len =  msg.len();
+    let len = msg.len();
     for word in msg {
         string.push_str(word.as_str());
         string.push(SPACE);
-    };
+    }
     if len == 1 {
         string.pop();
     }
@@ -67,5 +67,5 @@ pub const fn query(params: Vec<String>) -> WIMCInput {
     WIMCInput::from_val(Values::Null, params, WIMCMethods::Query)
 }
 pub const fn remove(id: u128) -> WIMCInput {
-    WIMCInput::from_val(Values::Number(id as f64),vec![],WIMCMethods::Remove)
+    WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Remove)
 }

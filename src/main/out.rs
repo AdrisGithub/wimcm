@@ -1,8 +1,8 @@
-use wjp::{Deserialize, map, ParseError, Serialize, Values};
+use wjp::{map, Deserialize, ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
 
-#[derive(Clone,Debug, PartialEq,)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct WIMCOutput(Result<Values, WIMCError>);
 
 impl Serialize for WIMCOutput {
