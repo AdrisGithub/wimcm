@@ -70,7 +70,7 @@ impl WIMCInput {
         &self.payload
     }
     pub fn get_parsed_payload<T: Deserialize>(&self) -> Result<T, ParseError> {
-        T::deserialize(self.payload.to_string())
+        T::deserialize_str(self.payload.to_string().as_str())
     }
     pub fn set_payload(&mut self, values: Values) -> &mut Self {
         self.payload = values;

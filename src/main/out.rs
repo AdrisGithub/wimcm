@@ -52,7 +52,7 @@ impl WIMCOutput {
     }
     pub fn deserialize<T: Deserialize>(self) -> Result<T, ParseError> {
         match self.0 {
-            Ok(v) => T::deserialize(v.to_string()),
+            Ok(v) => T::deserialize_str(v.to_string().as_str()),
             Err(_) => Err(ParseError::new()),
         }
     }
