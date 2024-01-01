@@ -14,5 +14,5 @@ exclude = ["src/resources/", ".github/", "sonar-project.properties"]
 path = "src/main/lib.rs"
 
 [dependencies]
-wjp = "1.1.2"
-wbdl = "1.1.0"
+wjp = "1.1.3"
+wbdl = "1.2.0"
