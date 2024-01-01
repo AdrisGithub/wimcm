@@ -2,7 +2,7 @@ use wjp::{Deserialize, map, ParseError, Serialize, Values};
 
 use crate::error::WIMCError;
 
-#[derive(Clone,Debug)]
+#[derive(Clone,Debug, PartialEq,)]
 pub struct WIMCOutput(Result<Values, WIMCError>);
 
 impl Serialize for WIMCOutput {
@@ -40,6 +40,9 @@ impl From<WIMCError> for WIMCOutput {
 impl WIMCOutput {
     pub const fn from_values(val: Values) -> Self {
         Self(Ok(val))
+    }
+    pub const fn from_err(err: WIMCError) -> Self {
+        Self(Err(err))
     }
     pub const fn is_error(&self) -> bool {
         self.0.is_err()
