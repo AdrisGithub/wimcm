@@ -1,11 +1,13 @@
-use wjp::{map, Deserialize, ParseError, Serialize, SerializeHelper, Values};
+use wjp::{Deserialize, map, ParseError, Serialize, SerializeHelper, Values};
 
 use crate::method::WIMCMethods;
+
 #[derive(Clone, Debug, PartialEq, Default)]
 pub struct WIMCInput {
     payload: Values,
     params: Vec<String>,
     method: WIMCMethods,
+    id : Option<String>
 }
 
 impl Serialize for WIMCInput {
@@ -13,29 +15,38 @@ impl Serialize for WIMCInput {
         Values::Struct(map!(
             ("payload", &self.payload),
             ("params", &self.params),
-            ("method", &self.method)
+            ("method", &self.method),
+            ("id",&self.id)
         ))
     }
 }
 
 impl WIMCInput {
-    pub fn new<T: Serialize>(obj: T, params: Vec<String>, method: WIMCMethods) -> Self {
-        Self::from_val(obj.serialize(), params, method)
+    pub fn new<T: Serialize>(obj: T, params: Vec<String>, method: WIMCMethods,id: Option<&str>) -> Self {
+        Self::from_val(obj.serialize(), params, method,id.map(String::from))
     }
-    pub const fn from_val(obj: Values, params: Vec<String>, method: WIMCMethods) -> Self {
+    pub const fn from_val(obj: Values, params: Vec<String>, method: WIMCMethods,id: Option<String>) -> Self {
         Self {
             params,
             method,
             payload: obj,
+            id
         }
     }
 
     pub const fn get_method(&self) -> &WIMCMethods {
         &self.method
     }
-    pub const fn set_method(mut self, method: WIMCMethods) -> Self {
+    pub fn set_method(mut self, method: WIMCMethods) -> Self {
         self.method = method;
         self
+    }
+    pub fn set_id(mut self,id: &str) -> Self{
+        self.id = Some(String::from(id));
+        self
+    }
+    pub fn get_id(&self) -> Option<&str>{
+        self.id.as_deref()
     }
     pub const fn get_params(&self) -> &Vec<String> {
         &self.params
@@ -82,10 +93,27 @@ impl TryFrom<Values> for WIMCInput {
         let payload = struc.remove("payload").ok_or(ParseError::new())?;
         let params = struc.map_val("params", Vec::try_from)?;
         let method = struc.map_val("method", WIMCMethods::try_from)?;
+        let id = struc.map_val("id",String::try_from).ok();
         Ok(Self {
             method,
             params,
             payload,
+            id
         })
+    }
+}
+#[cfg(test)]
+mod tests{
+    use wjp::{Deserialize, Serialize};
+    use crate::WIMCInput;
+    use crate::WIMCMethods::StoreInc;
+
+    #[test]
+    pub fn test(){
+        let input = WIMCInput::new("String",Vec::new(),StoreInc,Some("Hi"));
+        let ser = input.json();
+        println!("{}",ser);
+        let des = WIMCInput::deserialize_str(ser.as_str());
+        println!("{:?}",des);
     }
 }

@@ -2,17 +2,17 @@ use wbdl::Date;
 use wjp::{Serialize, Values};
 
 use crate::method::WIMCMethods;
-use crate::out::WIMCOutput;
+use crate::out::{WIMCOutput};
 use crate::r#in::WIMCInput;
 use crate::WIMCError;
 
 const SPACE: char = ' ';
-const CLEANUP: WIMCInput = WIMCInput::from_val(Values::Null, Vec::new(), WIMCMethods::Cleanup);
-const PING: WIMCInput = WIMCInput::from_val(Values::Null, Vec::new(), WIMCMethods::Ping);
+const CLEANUP: WIMCInput = WIMCInput::from_val(Values::Null, Vec::new(), WIMCMethods::Cleanup,None);
+const PING: WIMCInput = WIMCInput::from_val(Values::Null, Vec::new(), WIMCMethods::Ping,None);
 
 pub fn echo(msg: &str) -> WIMCInput {
     let vec = msg.split(SPACE).map(String::from).collect();
-    WIMCInput::from_val(Values::Null, vec, WIMCMethods::Echo)
+    WIMCInput::from_val(Values::Null, vec, WIMCMethods::Echo,None)
 }
 
 pub const fn ping() -> WIMCInput {
@@ -40,11 +40,17 @@ pub const fn cleanup() -> WIMCInput {
     CLEANUP
 }
 
-pub fn store<T: Serialize>(obj: T, mut params: Vec<String>, time: Option<Date>) -> WIMCInput {
+pub fn store<T: Serialize,S: ToString>(obj: T, mut params: Vec<String>, time: Option<Date>,id: S) -> WIMCInput {
     if let Some(time) = time {
         params.push(time.to_string())
     }
-    WIMCInput::new(obj, params, WIMCMethods::Store)
+    WIMCInput::new(obj, params, WIMCMethods::Store,Some(id.to_string().as_str()))
+}
+pub fn store_incr<T: Serialize>(obj: T, mut params: Vec<String>, time: Option<Date>) -> WIMCInput{
+    if let Some(time) = time {
+        params.push(time.to_string())
+    }
+    WIMCInput::new(obj, params, WIMCMethods::StoreInc,None)
 }
 
 pub const fn stored(id: u128) -> WIMCOutput {
@@ -60,12 +66,11 @@ pub const fn found(values: Values) -> WIMCOutput {
 }
 
 pub const fn get(id: u128) -> WIMCInput {
-    WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Get)
+    WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Get,None)
 }
-
 pub const fn query(params: Vec<String>) -> WIMCInput {
-    WIMCInput::from_val(Values::Null, params, WIMCMethods::Query)
+    WIMCInput::from_val(Values::Null, params, WIMCMethods::Query,None)
 }
 pub const fn remove(id: u128) -> WIMCInput {
-    WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Remove)
+    WIMCInput::from_val(Values::Number(id as f64), vec![], WIMCMethods::Remove,None)
 }
