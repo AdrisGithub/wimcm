@@ -1,3 +1,4 @@
+use std::u128;
 use wjp::{Deserialize, map, ParseError, Serialize, SerializeHelper, Values};
 
 use crate::error::WIMCError;
@@ -8,12 +9,12 @@ pub struct WIMCOutput(Result<WIMCOut, WIMCError>);
 #[derive(Clone, Debug, PartialEq)]
 pub struct WIMCOut {
     payload: Values,
-    id: Option<String>,
+    id: Option<u128>,
 }
 
 
-impl From<(Values, String)> for WIMCOut {
-    fn from(value: (Values, String)) -> Self {
+impl From<(Values, u128)> for WIMCOut {
+    fn from(value: (Values, u128)) -> Self {
         Self {
             payload: value.0,
             id: Some(value.1),
@@ -34,7 +35,7 @@ impl TryFrom<Values> for WIMCOut {
     type Error = ParseError;
     fn try_from(value: Values) -> Result<Self, Self::Error> {
         let mut struc = value.get_struct().ok_or(ParseError::new())?;
-        let id = struc.map_val("id", String::try_from).ok();
+        let id = struc.map_val("id", u128::try_from).ok();
         let payload = struc.remove("payload").ok_or(ParseError::new())?;
         Ok(Self {
             payload,
@@ -87,14 +88,14 @@ impl From<WIMCError> for WIMCOutput {
 
 
 impl WIMCOut {
-    pub fn deserialize<T: Deserialize>(self) -> Result<(T, Option<String>), ParseError> {
+    pub fn deserialize<T: Deserialize>(self) -> Result<(T, Option<u128>), ParseError> {
         let t = T::deserialize_str(self.payload.to_string().as_str())?;
         Ok((t, self.id))
     }
     const fn from(value: Values) -> Self {
         Self::new(value,None)
     }
-    const fn new(value:Values,id: Option<String>) -> Self{
+    const fn new(value:Values,id: Option<u128>) -> Self{
         Self{
             payload: value,
             id
@@ -121,7 +122,7 @@ impl WIMCOutput {
     pub fn ok(self) -> Option<WIMCOut> {
         self.0.ok()
     }
-    pub fn deserialize<T: Deserialize>(self) -> Result<(T, Option<String>), ParseError> {
+    pub fn deserialize<T: Deserialize>(self) -> Result<(T, Option<u128>), ParseError> {
         match self.0 {
             Ok(v) => v.deserialize(),
             Err(_) => Err(ParseError::new()),
@@ -151,7 +152,7 @@ mod tests{
 
     #[test]
     pub fn test(){
-        let obj = WIMCOutput::from_out(WIMCOut::new(Values::Null,Some(String::new())));
+        let obj = WIMCOutput::from_out(WIMCOut::new(Values::Null,Some(1)));
         let ser = obj.json();
         println!("{}",ser);
     }

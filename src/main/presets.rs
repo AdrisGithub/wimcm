@@ -40,11 +40,11 @@ pub const fn cleanup() -> WIMCInput {
     CLEANUP
 }
 
-pub fn store<T: Serialize,S: ToString>(obj: T, mut params: Vec<String>, time: Option<Date>,id: S) -> WIMCInput {
+pub fn store<T: Serialize>(obj: T, mut params: Vec<String>, time: Option<Date>,id: Option<u128>) -> WIMCInput {
     if let Some(time) = time {
         params.push(time.to_string())
     }
-    WIMCInput::new(obj, params, WIMCMethods::Store,Some(id.to_string().as_str()))
+    WIMCInput::new(obj, params, WIMCMethods::Store,id)
 }
 pub fn store_incr<T: Serialize>(obj: T, mut params: Vec<String>, time: Option<Date>) -> WIMCInput{
     if let Some(time) = time {
